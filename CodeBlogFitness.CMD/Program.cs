@@ -12,21 +12,57 @@ namespace CodeBodyFitness.CMD
             
             Console.WriteLine("Please enter user name");
             var name = Console.ReadLine();
-            
-            Console.WriteLine("Enter gender");
-            var gender = Console.ReadLine();
 
-            Console.WriteLine("Enter birthdate");
-            var birthdate = DateTime.Parse(Console.ReadLine());  // TODO redo it
+            var userController = new UserController(name);
 
-            Console.WriteLine("Enter weight");
-            var weight = Double.Parse(Console.ReadLine());
+            if (userController.IsNewUser)
+            {
+                Console.Write("Enter gender: ");
+                var gender = Console.ReadLine();
+                var birthDate = ParseDateTime();
+                var weight = ParseDouble("weight");
+                var height = ParseDouble("height");
 
-            Console.WriteLine("Enter height");
-            var height = Double.Parse(Console.ReadLine());
+                userController.SetNewUserData(gender, birthDate, weight, height);
+            }
 
-            var userController = new UserController(name, gender, birthdate, weight, height);
-            userController.Save();
+            Console.WriteLine(userController.CurrentUser);
+
         }
+
+        private static double ParseDouble(string name)
+        {
+            while (true)
+            {
+                Console.Write($"Enter {name}: ");
+                if (double.TryParse(Console.ReadLine(), out double value))
+                {
+                    return value;
+                }
+                else
+                {
+                    Console.WriteLine($"Not valid value {name}");
+                }
+            }
+        }
+        private static DateTime ParseDateTime()
+        {
+            DateTime birthDate;
+            while (true)
+            {
+                Console.Write("Enter birthdate (dd.MM.yyyy): ");
+                if (DateTime.TryParse(Console.ReadLine(), out birthDate))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Not valid birthdate");
+                }
+            }
+
+            return birthDate;
+        }
+
     }
 }

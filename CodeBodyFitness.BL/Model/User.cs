@@ -9,28 +9,30 @@ namespace CodeBodyFitness.BL.Model
         /// <summary>
         /// User
         /// </summary>
-        private string Name { get; }
+        public string Name { get; }
 
         /// <summary>
         /// Gender
         /// </summary>
-        private Gender Gender { get; }
+        public Gender Gender { get; set; }
         
         /// <summary>
         /// Birth date
         /// </summary>
-        private DateTime BirthDate { get; }
+        public DateTime BirthDate { get; set; }
 
         /// <summary>
         /// Weight
         /// </summary>
-        private double Weight { get; set; }
+        public double Weight { get; set; }
 
         /// <summary>
         /// Height
         /// </summary>
-        private double Height { get; set; }
-#endregion
+        public double Height { get; set; }
+
+        public int Age { get { return DateTime.Now.Year - BirthDate.Year; } }
+        #endregion
 
         /// <summary>
         /// New user
@@ -71,9 +73,19 @@ namespace CodeBodyFitness.BL.Model
             Height = height;
         }
 
+        public User(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("User name cannot be empty or null", nameof(name));
+            }
+
+            Name = name;
+        }
+
         public override string? ToString()
         {
-            return Name;
+            return Name+" "+Age;
         }
     }
 }
