@@ -3,6 +3,7 @@
 
 namespace CodeBodyFitness.BL.Model
 {
+    [Serializable]
     /// <summary>
     /// Gender
     /// </summary>
