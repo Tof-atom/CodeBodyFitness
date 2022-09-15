@@ -17,7 +17,7 @@ namespace CodeBodyFitness.CMD
 
             if (userController.IsNewUser)
             {
-                Console.Write("Enter gender: ");
+                Console.Write("Enter your gender: ");
                 var gender = Console.ReadLine();
                 var birthDate = ParseDateTime();
                 var weight = ParseDouble("weight");
