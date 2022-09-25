@@ -13,8 +13,9 @@ namespace CodeBodyFitness.BL.Controller
     /// <summary>
     /// User controller
     /// </summary>
-    public class UserController
+    public class UserController : ControllerBase
     {
+        private const string USERS_FILE_NAME="users.dat";
         public List<User> Users { get; }
 
         public User CurrentUser { get; }
@@ -54,20 +55,7 @@ namespace CodeBodyFitness.BL.Controller
         /// <returns></returns>
         public List<User> GetUsersData()
         {
-            var formatter = new BinaryFormatter();
-
-            using (var fs = new FileStream("users.data", FileMode.OpenOrCreate))
-            {
-                if (fs.Length > 0 && formatter.Deserialize(fs) is List<User> users)
-                {
-                    return users;
-                }
-                else
-                {
-                    return new List<User>();
-                }
-
-            }
+           return Load<List<User>>(USERS_FILE_NAME) ?? new List<User>();            
         }
 
         ///
@@ -86,12 +74,7 @@ namespace CodeBodyFitness.BL.Controller
         /// </summary>
         public void Save()
         {
-            var formatter = new BinaryFormatter();
-
-            using (var fs = new FileStream("users.data", FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fs, Users);
-            }
+            Save(USERS_FILE_NAME, Users);
         }
     }
 }
